@@ -30,7 +30,7 @@ if reponse.ok:
         inforations = row.find('td').text
         #print(inforations)
 
-    catinfo = categorie + inforations
+
 
 
 
