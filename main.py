@@ -6,29 +6,42 @@ import csv
 url = 'http://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html'
 
 reponse = requests.get(url)
+page = reponse.content
+soup = BeautifulSoup(page, 'html.parser')
 
-if reponse.ok:
-    print(reponse.content)
-    page = reponse.text
+titre = soup.find("h1")
 
-    soup = BeautifulSoup(page, 'html.parser')
-    #print(soup)
-    product_page_url = url
-    #print(url)
+cat = soup.find_all("th")
+categories = []
+categories.append(cat)
 
-    titre_bs = soup.find("h1")
-    print(titre_bs.text)
+info = soup.find_all("td")
+informations = []
+informations.append(info)
 
-    book_table = soup.find('table', class_ = 'table table-striped').text
-    #print(book_table)
+print(categories)
+print(informations)
 
-    rows = soup.find_all('tr')
+en_tete = [titre, url]
 
-    for row in rows:
-        categorie = row.find('th').text
-        #print(categorie)
-        inforations = row.find('td').text
-        #print(inforations)
+
+with open('data.csv', 'w') as csv_file:
+    writer = csv.writer(csv_file, delimiter=',')
+    writer.writerow(en_tete)
+    for cat, info in zip(informations, categories):
+        writer.writerow([categories, informations])
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
